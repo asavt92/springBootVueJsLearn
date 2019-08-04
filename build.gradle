@@ -11,17 +11,18 @@ buildscript {
 }
 
 
-
 plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'java'
     id 'io.franzbecker.gradle-lombok' version '1.8'
 }
 
+apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'java'
 
 group = 'ru.asavt.spring.earn'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -36,21 +37,29 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-web'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compile 'org.springframework.boot:spring-boot-starter-test'
 
-    compileOnly 'org.projectlombok:lombok:1.18.8'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'
     compileOnly("org.projectlombok:lombok:${lombokVersion}")
     testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
 
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.9'
-
-//    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.0.0'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.0'
 
+//    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+//    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 }
 
+task fatJar(type: Jar) {
+
+    manifest {
+        attributes "Main-Class": "ru.asavt.spring.earn.learn.LearnApplication"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
