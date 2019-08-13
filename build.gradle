@@ -54,6 +54,9 @@ dependencies {
     compile('javax.xml.bind:jaxb-api')
     compile('com.sun.xml.bind:jaxb-core')
     compile('com.sun.xml.bind:jaxb-impl')
+
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE')
     
 //    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 //    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
